@@ -1,0 +1,127 @@
+git clone <https://github.com/FreemanKingIII/SalesTrackingProgram.git>
+cd SalesTrackingProgram
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Scanner;
+
+class SalesPerson {
+    private String name;
+    private String title;
+    private ArrayList<Double> sales;
+
+    // Constructor
+    public SalesPerson(String name, String title) {
+        this.name = name;
+        this.title = title;
+        this.sales = new ArrayList<>();
+    }
+
+    // Getters
+    public String getName() {
+        return name;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    // Method to add sales
+    public void addSale(double sale) {
+        sales.add(sale);
+    }
+
+    // Iterator for sales
+    public Iterator<Double> iterSales() {
+        return sales.iterator();
+    }
+
+    // Calculate Total Sales
+    public double getTotalSales() {
+        double total = 0;
+        for (double sale : sales) {
+            total += sale;
+        }
+        return total;
+    }
+
+    // Calculate Min Sales
+    public double getMinSales() {
+        double min = Double.MAX_VALUE;
+        for (double sale : sales) {
+            if (sale < min) {
+                min = sale;
+            }
+        }
+        return min;
+    }
+
+    // Calculate Max Sales
+    public double getMaxSales() {
+        double max = Double.MIN_VALUE;
+        for (double sale : sales) {
+            if (sale > max) {
+                max = sale;
+            }
+        }
+        return max;
+    }
+
+    // Calculate Average Sales
+    public double getAverageSales() {
+        return getTotalSales() / sales.size();
+    }
+}
+
+public class SalesTrackingProgram {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<SalesPerson> salesPeople = new ArrayList<>();
+        double companyTotalSales = 0;
+
+        // Input for 3 Sales People
+        for (int i = 0; i < 3; i++) {
+            System.out.print("Please enter sales person name: ");
+            String name = scanner.nextLine();
+
+            System.out.print("Please enter your sales person title: ");
+            String title = scanner.nextLine();
+
+            SalesPerson sp = new SalesPerson(name, title);
+
+            System.out.print("How many sales values will you enter for this sales person? ");
+            int salesCount = Integer.parseInt(scanner.nextLine());
+
+            for (int j = 0; j < salesCount; j++) {
+                System.out.print("Please enter sales figure for " + name + ": ");
+                double sale = Double.parseDouble(scanner.nextLine());
+                sp.addSale(sale);
+            }
+
+            salesPeople.add(sp);
+            System.out.println();
+        }
+
+        // Generate Sales Report
+        System.out.println("\nSales Report:");
+        System.out.println("----------------------------------------------------");
+
+        for (SalesPerson sp : salesPeople) {
+            System.out.println("Sales person: " + sp.getName());
+            System.out.printf("Title: %s\n", sp.getTitle());
+            System.out.printf("Total Sales: $%.2f\n", sp.getTotalSales());
+            System.out.printf("Min Sales: $%.2f\n", sp.getMinSales());
+            System.out.printf("Max Sales: $%.2f\n", sp.getMaxSales());
+            System.out.printf("Average Sales: $%.2f\n", sp.getAverageSales());
+            System.out.println("----------------------------------------------------");
+
+            companyTotalSales += sp.getTotalSales();
+        }
+
+        System.out.printf("Company total sales: $%.2f\n", companyTotalSales);
+        System.out.println("\nBUILD SUCCESSFUL!");
+        scanner.close();
+    }
+}
+git add .
+git commit -m "Initial commit - Sales Tracking Program"
+git push origin main
